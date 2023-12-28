@@ -1,11 +1,13 @@
 
 import './App.css';
-import MainPage from './pages/MainPage';
+import Product from './pages/Product';
+import Navmenu from './components/Navmenu';
 
 function App() {
   return (
    <div>
-    <MainPage/>
+    <Navmenu/>
+    <Product/>
    </div>
   );
 }
