@@ -8,20 +8,22 @@ import {
 function* getProduct() {
   try {
     console.log("getProduct is called");
-    let response = yield fetch("http://localhost:3600/products");
+    let response = yield fetch("http://localhost:4000/ICMS/productsRouts/get_all_products");
+    
 
     if (!response.ok) {
       throw new Error(`Failed to fetch products. Status: ${response.status}`);
     }
 
     let data = yield response.json();
-    console.log("get product saga is being called", data);
+    console.log("get product saga is being called", data.data);
 
-    yield put({ type: SET_PRODUCT_LIST, payload: data });
+    yield put({ type: SET_PRODUCT_LIST, payload: data.data });
   } catch (error) {
     console.error("Error in getProducts saga:", error);
   }
 }
+
 
 function* postProduct(action) {
   try {

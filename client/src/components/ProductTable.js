@@ -93,7 +93,7 @@ const ProductTable = () => {
               </tr>
             </thead>
             <tbody>
-                {productData.map((item) => <tr key={item.id} className="border-t border-gray-300 dark:border-gray-600">
+                {productData.map((item) => <tr key={item.product_id} className="border-t border-gray-300 dark:border-gray-600">
                 <td className="flex items-center px-6 py-4 border border-gray-300 dark:border-gray-600">
                   <a
                     href="#"
@@ -108,32 +108,33 @@ const ProductTable = () => {
                     Remove
                   </a>
                 </td>
-                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.Productname}</td>
+                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.product_name}</td>
                 <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.Availability}</td>
-                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.ProductType}</td>
-                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.SupplierName}</td>
-                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.Weight}</td>
+                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.product_type_name}</td>
+                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.supplier_name}</td>
+                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.weight}</td>
                 <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.flavor}</td>
-                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.PowerConsumption}</td>
+                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.power_consumption}</td>
                 <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.size}</td>
-                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.Material}</td>
+                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.material}</td>
                 <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.color}</td>
                 <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.brand}</td>
-                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.SellingPrice}</td>
-                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.CostPrice}</td>
-                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.Quantity}</td>
-                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.ReorderQuantity}</td>
-                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.MaximumStock}</td>
-                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.MinimumStock}</td>
-                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.StoreLocation}</td>
-                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600"><img src={item.Image} alt = "product photo"/></td>
-                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.Discount}</td>
-                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.TaxInformation}</td>
-                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.StockKeepingUnit}</td>
+                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.selling_price}</td>
+                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.cost_price}</td>
+                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.quantity}</td>
+                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.reorder_quantity}</td>
+                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.maximum_stock_level}</td>
+                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.minimum_stock_level}</td>
+                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.location_in_the_store}</td>
+                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600"><img src={item.product_images} alt = "product photo"/></td>
+                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.discount}</td>
+                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.tax_information}</td>
+                <td className="px-6 py-4 border border-gray-300 dark:border-gray-600">{item.Stock_keeping_unit}</td>
               </tr>)}
               
             </tbody>
           </table>
+         
         </div>
       </div>
     </div>

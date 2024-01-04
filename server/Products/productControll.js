@@ -5,6 +5,27 @@ var constatnt = require("../config/constatnt")
 
 module.exports.addProduct = async (req,res) => {
 
+  try{
+
+    if( 
+      !!req.body.ProductType &&
+      !!req.body.ProductName &&
+      !!req.body.SupplierName &&
+      !!req.body.SellingPrice &&
+      !!req.body.CostPrice &&
+      !!req.body.Quantity &&
+      !!req.body.StoreLocation &&
+      !!req.body.StockKeepingUnit &&
+      !!req.body.Discount &&
+      !!req.body.TaxInformation
+      ){
+    }else{
+
+    }
+
+  }catch (e) {
+    return res.status(400).json(e);
+  }
 }
 
 module.exports.getAllProduct = async (req,res) => {
