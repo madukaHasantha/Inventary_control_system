@@ -7,9 +7,10 @@ import {
 
 function* getProduct() {
   try {
-    console.log("getProduct is called");
-    let response = yield fetch("http://localhost:4000/ICMS/productsRouts/get_all_products");
-    
+    console.log("getProduct saga is called");
+    let response = yield fetch(
+      "http://localhost:4000/ICMS/productsRouts/get_all_products"
+    );
 
     if (!response.ok) {
       throw new Error(`Failed to fetch products. Status: ${response.status}`);
@@ -24,19 +25,23 @@ function* getProduct() {
   }
 }
 
-
 function* postProduct(action) {
   try {
     console.log("Product saga, postProduct is called");
-    const { formData } = action.payload;
+    const formData = action.payload;
 
-    let response = yield fetch("http://localhost:3600/products", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
+    console.log("Form data", formData);
+
+    let response = yield fetch(
+      "http://localhost:4000/ICMS/productsRouts/add_products",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }
+    );
 
     if (!response.ok) {
       throw new Error(`Failed to add product. Status: ${response.status}`);
@@ -44,7 +49,7 @@ function* postProduct(action) {
 
     // Assuming your server responds with the newly added product data
     let data = yield response.json();
-    console.log("Product post responce Data",data);
+    console.log("Product post responce Data", data);
 
     // Dispatch an action to update the product list with the new data
     yield put({ type: "POST_SUCCESS", payload: data });

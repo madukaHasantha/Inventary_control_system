@@ -5,7 +5,8 @@ const routes = new Router();
 
 routes.post("/add_products", productController.addProduct);
 routes.get("/get_all_products", productController.getAllProduct);
-routes.get("/get_by_Id_products", productController.getByIdProduct);
+routes.post("/get_products_by_id_and_supplierId", productController.getProductByIdAndSuppierId);
+routes.post("/get_by_Id_products", productController.getByIdProduct);
 routes.post("/edit_products", productController.editProduct);
 routes.post("/delete_products", productController.deleteProduct);
 

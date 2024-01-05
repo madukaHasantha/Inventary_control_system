@@ -1,14 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ProductTable from "../components/ProductTable";
 import { useDispatch, useSelector } from "react-redux";
 import { productInsertDataList } from "../Redux/Product/productAction";
+import { productNameGetList } from "../Redux/Product Name/productNameAction";
+import { productTypeGetList } from "../Redux/Product Type/productTypeAction";
+import { supplierGetList } from "../Redux/Supplier/supplierAction";
 
 function Product() {
+
+  
   const { data, loading, error } = useSelector(
     (state) => state.ProductPostReducer
   );
-  const productData = useSelector((state) => state.produtctReducerData);
+  
   const dispatch = useDispatch();
+  
+  const productData = useSelector((state) => state.produtctReducerData);
+
+  let productNameData = useSelector((state) => state.produtctNameGetDataReducer);
+  console.log("Product Name data in main component", productNameData);
+
+  let productTypeData = useSelector((state) => state.produtctTypeGetDataReducer);
+  console.log("Product type data in main component", productTypeData);
+
+  let supplierData = useSelector((state) => state.supplierGetDataReducer);
+  console.log("Supplier data in main component", supplierData);
+
+  useEffect(() => {
+    
+    dispatch(productNameGetList());
+    dispatch(productTypeGetList());
+    dispatch(supplierGetList());
+    
+  }, []); 
+  
 
   const [formData, setFormData] = useState({
     ProductName: "",
@@ -63,6 +88,13 @@ function Product() {
       !!formData.StoreLocation &&
       !!formData.StorekeepingUnit
     ) {
+      
+      // if(){
+        
+      // }
+      // else{
+        
+      // }
       dispatch(productInsertDataList(formData));
     } else {
       setErrorMessage("Please enter all the fields!");
@@ -288,7 +320,7 @@ function Product() {
           </div>
           <form>
             <div className="flex flex-wrap mt-10 -mx-2">
-              {/*Product name*/}
+              {/*Product type*/}
               <div className="w-full px-2 mb-4 md:w-1/2">
                 <label
                   htmlFor="ProductType"
@@ -299,7 +331,7 @@ function Product() {
                 <select
                   id="ProductType"
                   name="ProductType"
-                  value={formData.ProductType}
+                  value={formData.value}
                   onChange={handleChange}
                   required
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -307,12 +339,12 @@ function Product() {
                   <option value="" disabled>
                     Select Product Type
                   </option>
-                  {productData.map((product) => (
+                  {productTypeData.map((productType) => (
                     <option
-                      key={product.product_type_id}
-                      value={product.product_type_name}
+                      key={productType.id}
+                      value={productType.id}
                     >
-                      {product.product_type_name}
+                      {productType.product_type_name}
                     </option>
                   ))}
                 </select>
@@ -328,7 +360,7 @@ function Product() {
                 <select
                   id="ProductName"
                   name="ProductName"
-                  value={formData.ProductName}
+                  value={formData.value}
                   onChange={handleChange}
                   required
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -336,12 +368,12 @@ function Product() {
                   <option value="" disabled>
                     Select Product Name
                   </option>
-                  {productData.map((product) => (
+                  {productNameData.map((productName) => (
                     <option
-                      key={product.product_name_id}
-                      value={product.product_name}
+                      key={productName.id}
+                      value={productName.id}
                     >
-                      {product.product_name}
+                      {productName.product_name}
                     </option>
                   ))}
                 </select>
@@ -358,7 +390,7 @@ function Product() {
                 <select
                   id="SupplierName"
                   name="SupplierName"
-                  value={formData.SupplierName}
+                  value={formData.value}
                   onChange={handleChange}
                   required
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -366,12 +398,12 @@ function Product() {
                   <option value="" disabled>
                     Select Supplier Name
                   </option>
-                  {productData.map((product) => (
+                  {supplierData.map((supplier) => (
                     <option
-                      key={product.supplier_name_id}
-                      value={product.supplier_name}
+                      key={supplier.id}
+                      value={supplier.id}
                     >
-                      {product.supplier_name}
+                      {supplier.supplier_name}
                     </option>
                   ))}
                 </select>

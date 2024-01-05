@@ -2,16 +2,21 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { productList } from "../Redux/Product/productAction";
 
+
+
 const ProductTable = () => {
 
   const dispatch = useDispatch();
   let productData = useSelector((state) => state.produtctReducerData);
-  console.log("data in main component", productData);
-
- useEffect(() =>{
+  console.log("product data in main component", productData);
   
-  dispatch(productList())
- }, [])
+
+
+  useEffect(() => {
+    dispatch(productList());
+   
+    
+  }, []); 
 
   return (
     <div>

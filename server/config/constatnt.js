@@ -1,6 +1,23 @@
 
 module.exports = {
 
+    GET_ALL_PRODUCT_TYPE: `SELECT* FROM product_type`,
+    GET_ALL_PRODUCT_NAME: `SELECT* FROM product_name`,
+    GET_ALL_SUPPLIER: `SELECT* FROM supplier`,
+
+
+
+
+
+
+    ADD_PRODUCT: `INSERT INTO product(
+        id, PRODUCT_TYPE_id, PRODUCT_NAME_id, SUPPLIER_id, cost_price,
+        selling_price, quantity, reorder_quantity, reorder_point,
+        expiration_date, maximum_stock_level, minimum_stock_level,
+        location_in_the_store, product_images, discount, tax_information,
+        Stock_keeping_unit, color, size, weight, power_consumption, flavor,
+        material, brand,product_date, soft_delete, is_available ) 
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);`,
     GET_ALL_PRODUCTS: `SELECT
     P.id AS product_id,
     PT.product_type_name,
@@ -38,5 +55,7 @@ JOIN
 JOIN
     SUPPLIER S ON P.SUPPLIER_id = S.id;
 
-`
+`,
+GET_PRODUCT_BY_PRODUCTID_AND_SUPPLIERID: `SELECT * FROM product WHERE PRODUCT_NAME_id=? AND SUPPLIER_id=?`
+
 }
