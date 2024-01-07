@@ -19,7 +19,7 @@ export const ProductPostReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        data: "Successfully Added Data",
+        data: "Successfully Added Datas",
       };
     case 'POST_FAILURE':
       return {
