@@ -4,9 +4,33 @@ const { DateTime } = require("luxon");
 const uuid = require("uuid");
 const fs = require("fs");
 const { error } = require("console");
+const multer = require('multer');
+const path = require('path');
 
 module.exports.addProduct = async (req, res) => {
   try {
+
+
+    // Set up multer storage and filename settings
+    const storage = multer.diskStorage({
+      destination: function (req, file, cb) {
+        cb(null, "public/image"); // Destination folder for uploaded files
+      },
+      filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+        const extension = path.extname(file.originalname);
+        cb(null, file.fieldname + "-" + uniqueSuffix + extension);
+      },
+    });
+
+    // Create multer instance with storage settings
+    const upload = multer({ storage: storage });
+    const image = upload.single("file");
+
+    console.log("product images", image);
+
+
+
     console.log("body keys and values: ", req.body);
 
     if (
@@ -48,8 +72,9 @@ module.exports.addProduct = async (req, res) => {
             if (err) {
               return res.status(400).json({ error: err.message });
             } else {
-
-              console.log("no Product details found this producttypeID and supplierID");
+              console.log(
+                "no Product details found this producttypeID and supplierID"
+              );
               // return res.status(200).json({
               //   message: "Success got a Product details",
               //   data: rows,
@@ -137,7 +162,6 @@ module.exports.addProduct = async (req, res) => {
 
                 db.query(constatnt.ADD_PRODUCT, params, (err, result) => {
                   if (err) {
-
                     console.log("The Product adding fail!", err);
                     return res.status(400).json({
                       error: err.message,
@@ -152,7 +176,6 @@ module.exports.addProduct = async (req, res) => {
                   }
                 });
               } else {
-
                 console.log("Error Adding product data!");
                 return res.status(400).json({
                   message: errors[0],
@@ -174,7 +197,7 @@ module.exports.addProduct = async (req, res) => {
         message: "Please enter All the fields!!",
       });
     }
-  }catch (e) {
+  } catch (e) {
     console.log("Error in try-catch block:", e.message);
     return res.status(400).json(e);
   }

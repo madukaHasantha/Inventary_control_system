@@ -49,7 +49,7 @@ function* postProduct(action) {
 
     // Assuming your server responds with the newly added product data
     let data = yield response.json();
-    console.log("Product post responce Data", data);
+    console.log("Product post responce Data",data, data.message);
 
     // Dispatch an action to update the product list with the new data
     yield put({ type: "POST_SUCCESS", payload: data });
