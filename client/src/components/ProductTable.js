@@ -4,6 +4,7 @@ import { productList } from "../Redux/Product/productAction";
 import { productNameGetList } from "../Redux/Product Name/productNameAction";
 import { productTypeGetList } from "../Redux/Product Type/productTypeAction";
 import { supplierGetList } from "../Redux/Supplier/supplierAction";
+import { productUpdateDataList } from "../Redux/Product/productAction";
 
 const ProductTable = () => {
   let productNameData = useSelector(
@@ -28,6 +29,7 @@ const ProductTable = () => {
   }, []);
 
   const [formData, setFormData] = useState({
+    ProductId: "",
     ProductName: "",
     ProductType: "",
     SupplierName: "",
@@ -59,10 +61,14 @@ const ProductTable = () => {
   //   });
   // };
 
-  const mainHandleSubmit = (e) => {
-    e.preventDefault();
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [responseData, setResponseData] = useState(null);
 
-    // dispatch(productInsertDataList(formData));
+  const mainHandleSubmit = () => {
+
+    
+    dispatch(productUpdateDataList(formData));
   };
 
   //Edit popup form
@@ -71,16 +77,17 @@ const ProductTable = () => {
     console.log("Table clicked Item data: ", itemData);
 
     const [editformData, setEditFormData] = useState({
-      ProductName: itemData.product_name, 
-      ProductType: itemData.product_type_name, 
-      SupplierName: itemData.supplier_name, 
+      ProductId: itemData.product_id,
+      ProductName: itemData.product_name,
+      ProductType: itemData.product_type_name,
+      SupplierName: itemData.supplier_name,
       SellingPrice: itemData.selling_price,
       CostPrice: itemData.cost_price,
       Quantity: itemData.quantity,
       StoreLocation: itemData.location_in_the_store,
       Discount: itemData.discount,
       TaxInformation: itemData.tax_information,
-      StorekeepingUnit: itemData.Stock_keeping_unit, 
+      StorekeepingUnit: itemData.Stock_keeping_unit,
     });
 
     console.log("product Name: ", itemData.product_name);
@@ -94,21 +101,53 @@ const ProductTable = () => {
     };
 
     const editHandleSubmit = (e) => {
+      e.preventDefault();
+      let selectedProductTypeId = null;
+
+      if (itemData.product_type_name === editformData.ProductType) {
+        selectedProductTypeId = itemData.product_type_id;
+      } else {
+        selectedProductTypeId = parseInt(editformData.ProductType, 10);
+      }
+
+      let selectedProductNameId = null;
+
+      if (itemData.product_name === editformData.ProductName) {
+        selectedProductNameId = itemData.product_name_id;
+      } else {
+        selectedProductNameId = parseInt(editformData.ProductName, 10);
+      }
+
+      let selectedSupplierNameId = null;
+
+      if (itemData.supplier_name === editformData.SupplierName) {
+        selectedSupplierNameId = itemData.supplier_name_id;
+      } else {
+        selectedSupplierNameId = parseInt(editformData.SupplierName, 10);
+      }
+
+      console.log(
+        "type of selectedProductNameId",
+        typeof selectedSupplierNameId
+      );
+
       setFormData({
         ...formData,
-        ProductType: editformData.ProductType || "",
-        ProductName: editformData.ProductName || "",
-        SupplierName: editformData.SupplierName || "",
-        SellingPrice: editformData.SellingPrice || "",
-        CostPrice: editformData.CostPrice || "",
-        Quantity: editformData.Quantity || "",
-        StoreLocation: editformData.StoreLocation || "",
-        Discount: editformData.Discount || "",
-        TaxInformation: editformData.TaxInformation || "",
-        StorekeepingUnit: editformData.StorekeepingUnit || "",
+        ProductId: editformData.ProductId,
+        ProductType: selectedProductTypeId,
+        ProductName: selectedProductNameId,
+        SupplierName: selectedSupplierNameId,
+        SellingPrice: editformData.SellingPrice,
+        CostPrice: editformData.CostPrice,
+        Quantity: editformData.Quantity,
+        StoreLocation: editformData.StoreLocation,
+        Discount: editformData.Discount,
+        TaxInformation: editformData.TaxInformation,
+        StorekeepingUnit: editformData.StorekeepingUnit,
       });
 
-      onClose();
+      mainHandleSubmit();
+      // onClose();
     };
 
     return (
@@ -140,9 +179,7 @@ const ProductTable = () => {
                     required
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   >
-                    <option value="" >
-                    {itemData.product_type_name}
-                    </option>
+                    <option value="">{itemData.product_type_name}</option>
                     {productTypeData.map((productType) => (
                       <option key={productType.id} value={productType.id}>
                         {productType.product_type_name}
@@ -166,9 +203,7 @@ const ProductTable = () => {
                     required
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   >
-                    <option value="">
-                    {editformData.ProductName}
-                    </option>
+                    <option value="">{editformData.ProductName}</option>
                     {productNameData.map((productName) => (
                       <option key={productName.id} value={productName.id}>
                         {productName.product_name}
@@ -193,9 +228,7 @@ const ProductTable = () => {
                     required
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   >
-                    <option value="" >
-                    {editformData.SupplierName}
-                    </option>
+                    <option value="">{editformData.SupplierName}</option>
                     {supplierData.map((supplier) => (
                       <option key={supplier.id} value={supplier.id}>
                         {supplier.supplier_name}
@@ -364,7 +397,12 @@ const ProductTable = () => {
                     Product Specification
                   </button>
 
-                  {isPopupOpen && <PopupForm onClose={closePopup} subItemData = {clickedItemSubFormData}/>}
+                  {isPopupOpen && (
+                    <PopupForm
+                      onClose={closePopup}
+                      subItemData={clickedItemSubFormData}
+                    />
+                  )}
                 </div>
 
                 {/* Add other form fields here */}
@@ -414,11 +452,9 @@ const ProductTable = () => {
 
   //popup form
   const PopupForm = ({ onClose, subItemData }) => {
-
     console.log("Sub popoup form data: ", subItemData);
-    
+
     const [popupFormData, setPopupFormData] = useState({
-      
       Weight: subItemData.weight,
       Flavor: subItemData.flavor,
       PowerConsumption: subItemData.power_consumption,
@@ -437,15 +473,17 @@ const ProductTable = () => {
 
     console.log("popup Form Data", popupFormData);
 
-    const popupHandleSubmit = () => {
+    const popupHandleSubmit = (e) => {
+
+      e.preventDefault();
       setFormData({
         ...formData,
-        Weight: popupFormData.Weight || "",
-        Flavor: popupFormData.Flavor || "",
-        PowerConsumption: popupFormData.PowerConsumption || "",
-        Size: popupFormData.Size || "",
-        Material: popupFormData.Material || "",
-        Color: popupFormData.Color || "",
+        Weight: popupFormData.Weight,
+        Flavor: popupFormData.Flavor ,
+        PowerConsumption: popupFormData.PowerConsumption ,
+        Size: popupFormData.Size ,
+        Material: popupFormData.Material,
+        Color: popupFormData.Color,
       });
 
       // Close the popup after handling the submit
