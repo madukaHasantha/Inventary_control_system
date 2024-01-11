@@ -4,13 +4,11 @@ const { DateTime } = require("luxon");
 const uuid = require("uuid");
 const fs = require("fs");
 const { error } = require("console");
-const multer = require('multer');
-const path = require('path');
+const multer = require("multer");
+const path = require("path");
 
 module.exports.addProduct = async (req, res) => {
   try {
-
-
     // Set up multer storage and filename settings
     const storage = multer.diskStorage({
       destination: function (req, file, cb) {
@@ -28,8 +26,6 @@ module.exports.addProduct = async (req, res) => {
     const image = upload.single("file");
 
     console.log("product images", image);
-
-
 
     console.log("body keys and values: ", req.body);
 
@@ -252,6 +248,78 @@ module.exports.getProductByIdAndSuppierId = async (req, res) => {
   }
 };
 
+module.exports.editProduct = async (req, res) => {
+  try {
+    const productID = req.body.ProductId;
+    var data = {};
+
+    await db.query(
+      constatnt.GET_PRODUCT_BY_PRODUCTID,
+      [productID],
+      (err, result) => {
+        if (result.length != 0) {
+          if (err) {
+            return res.status(400).json({ error: err.message });
+          } else {
+            data = result[0];
+
+            Object.keys(req.body).forEach((key) => {
+              if (key != "ProductId" && req.body[key] != data[key]) {
+                data[key] = req.body[key];
+              }
+            });
+
+            var params = [
+                  data.id,
+                  data.PRODUCT_TYPE_id,
+                  data.PRODUCT_NAME_id,
+                  data.SUPPLIER_id,
+                  data.cost_price,
+                  data.selling_price,
+                  data.quantity,
+                  data.reorder_quantity,
+                  data.reorder_point,
+                  data.expiration_date,
+                  data.maximum_stock_level,
+                  data.minimum_stock_level,
+                  data.location_in_the_store,
+                  data.product_images,
+                  data.discount,
+                  data.tax_information,
+                  data.Stock_keeping_unit,
+                  data.color,
+                  data.size,
+                  data.weight,
+                  data.power_consumption,
+                  data.flavor,
+                  data.material,
+                  data.brand,
+                  data.product_date,
+                  data.soft_delete,
+                  data.is_available,
+            ];
+            db.query(constants.UPDATE_CUSTOMER, params, (err, result) => {
+              if (err) {
+                return res.status(400).json({ error: err.message });
+              } else {
+                return res.status(200).json({
+                  message: "Customer sucessfully updated!",
+                  data: result,
+                });
+              }
+            });
+          }
+        } else {
+          return res.status(400).json({
+            message: "There is no any customer in this id to update",
+          });
+        }
+      }
+    );
+  } catch (e) {
+    return res.status(400).json(e);
+  }
+};
+
 module.exports.getByIdProduct = async (req, res) => {};
-module.exports.editProduct = async (req, res) => {};
 module.exports.deleteProduct = async (req, res) => {};

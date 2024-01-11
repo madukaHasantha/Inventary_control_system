@@ -3,6 +3,9 @@ import {
   PRODUCT_LIST,
   SET_PRODUCT_LIST,
   PRODUCT_INSERT_LIST,
+  PRODUCT_UPDATE_LIST,
+  UPDATE_DATA_SUCCSESS,
+  UPDATE_DATA_FAILD,
 } from "../constatnt";
 
 function* getProduct() {
@@ -27,10 +30,10 @@ function* getProduct() {
 
 function* postProduct(action) {
   try {
-    console.log("Product saga, postProduct is called");
+    console.log("Product saga, Add Product is called");
     const formData = action.payload;
 
-    console.log("Form data", formData);
+    console.log("Add Form data", formData);
 
     let response = yield fetch(
       "http://localhost:4000/ICMS/productsRouts/add_products",
@@ -44,34 +47,69 @@ function* postProduct(action) {
     );
 
     if (!response.ok) {
-      throw new Error(`Failed to add product. Status: ${response.status}`);
+      throw new Error(`Failed to Add product. Status: ${response.status}`);
     }
 
     // Assuming your server responds with the newly added product data
     let data = yield response.json();
-    console.log("Product post responce Data",data, data.message);
+    console.log("Product Add responce Data",data, data.message);
 
     // Dispatch an action to update the product list with the new data
     yield put({ type: "POST_SUCCESS", payload: data });
   } catch (error) {
-    console.error("Error in postProduct saga:", error);
+    console.error("Error in Add Product saga:", error);
     yield put({ type: "POST_FAILURE", payload: error.message });
   }
 
-  console.log("product post action type: ", action.type);
+  console.log("product Add action type: ", action.type);
 }
 
-function* updateProduct() {
-  // Add your update logic here
+
+
+function* updateProduct(action) {
+  try {
+    console.log("Product saga, Update Product is called");
+    const formData = action.payload;
+
+    console.log("Update Form data", formData);
+
+    let response = yield fetch(
+      "http://localhost:4000/ICMS/productsRouts/update_product",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`Failed to update product. Status: ${response.status}`);
+    }
+
+    // Assuming your server responds with the newly Update product data
+    let data = yield response.json();
+    console.log("Product update responce Data",data, data.message);
+
+    // Dispatch an action to update the product update list with the new data
+    yield put({ type: UPDATE_DATA_SUCCSESS, payload: data });
+  } catch (error) {
+    console.error("Error in Update Product saga:", error);
+    yield put({ type: UPDATE_DATA_FAILD, payload: error.message });
+  }
+
+  console.log("product update action type: ", action.type);
 }
 
 function* deleteProduct() {
-  // Add your delete logic here
+  
 }
 
 function* productSaga() {
   yield takeEvery(PRODUCT_LIST, getProduct);
   yield takeEvery(PRODUCT_INSERT_LIST, postProduct);
+  yield takeEvery(PRODUCT_UPDATE_LIST, updateProduct);
   // Add similar lines for update and delete if needed
 }
 
