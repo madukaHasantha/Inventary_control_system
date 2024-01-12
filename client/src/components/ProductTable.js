@@ -75,7 +75,7 @@ const ProductTable = () => {
 
   const EditPopupForm = ({ onClose, itemData }) => {
     console.log("Table clicked Item data: ", itemData);
-
+    
     const [editformData, setEditFormData] = useState({
       ProductId: itemData.product_id,
       ProductName: itemData.product_name,
@@ -90,7 +90,6 @@ const ProductTable = () => {
       StorekeepingUnit: itemData.Stock_keeping_unit,
     });
 
-    console.log("product Name: ", itemData.product_name);
 
     const editHandleChange = (e) => {
       const { name, value, type, files } = e.target;
@@ -440,6 +439,7 @@ const ProductTable = () => {
   const [clickedItemData, setClickedItemData] = useState(null);
 
   const EditOpenPopup = (data) => {
+    
     setClickedItemData(data);
     setEditPopupOpen(true);
   };
@@ -633,6 +633,7 @@ const ProductTable = () => {
   const [clickedItemSubFormData, setClickedItemSubFormData] = useState(null);
 
   const openPopup = (data) => {
+    
     setClickedItemSubFormData(data);
     setPopupOpen(true);
   };

@@ -74,9 +74,9 @@ function* updateProduct(action) {
     console.log("Update Form data", formData);
 
     let response = yield fetch(
-      "http://localhost:4000/ICMS/productsRouts/update_product",
+      "http://localhost:4000/ICMS/productsRouts/edit_products",
       {
-        method: "POST",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },

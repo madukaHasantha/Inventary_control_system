@@ -3,7 +3,7 @@ var constatnt = require("../config/constatnt");
 const { DateTime } = require("luxon");
 const uuid = require("uuid");
 const fs = require("fs");
-const { error } = require("console");
+const { error, log } = require("console");
 const multer = require("multer");
 const path = require("path");
 
@@ -250,8 +250,10 @@ module.exports.getProductByIdAndSuppierId = async (req, res) => {
 
 module.exports.editProduct = async (req, res) => {
   try {
+
+    console.log("editProduct is called");
     const productID = req.body.ProductId;
-    var data = {};
+    
 
     await db.query(
       constatnt.GET_PRODUCT_BY_PRODUCTID,
@@ -259,16 +261,44 @@ module.exports.editProduct = async (req, res) => {
       (err, result) => {
         if (result.length != 0) {
           if (err) {
+            console.log("product id is not finding!");
             return res.status(400).json({ error: err.message });
           } else {
-            data = result[0];
 
-            Object.keys(req.body).forEach((key) => {
-              if (key != "ProductId" && req.body[key] != data[key]) {
-                data[key] = req.body[key];
-              }
-            });
+            console.log("product id is ok");
+            // data = result[0];
 
+            // Object.keys(req.body).forEach((key) => {
+            //   if (key != "ProductId" && req.body[key] != data[key]) {
+            //     data[key] = req.body[key];
+            //   }
+            // });
+
+            const data = {
+              id: req.body.ProductId,
+              PRODUCT_TYPE_id: req.body.ProductType,
+              PRODUCT_NAME_id: req.body.ProductName,
+              SUPPLIER_id: req.body.SupplierName,
+              cost_price: req.body.CostPrice,
+              selling_price: req.body.SellingPrice,
+              quantity: req.body.Quantity,
+              location_in_the_store: req.body.StoreLocation,
+              product_images: null,
+              discount: req.body.Discount,
+              tax_information: req.body.TaxInformation,
+              Stock_keeping_unit: req.body.StorekeepingUnit,
+              color: req.body.Color,
+              size: req.body.Size,
+              weight: req.body.Weight,
+              power_consumption: req.body.PowerConsumption,
+              flavor: req.body.Flavor,
+              material: req.body.Material,
+          
+            };
+
+            
+
+            console.log("data in the update", data);
             var params = [
                   data.id,
                   data.PRODUCT_TYPE_id,
@@ -277,11 +307,6 @@ module.exports.editProduct = async (req, res) => {
                   data.cost_price,
                   data.selling_price,
                   data.quantity,
-                  data.reorder_quantity,
-                  data.reorder_point,
-                  data.expiration_date,
-                  data.maximum_stock_level,
-                  data.minimum_stock_level,
                   data.location_in_the_store,
                   data.product_images,
                   data.discount,
@@ -293,25 +318,28 @@ module.exports.editProduct = async (req, res) => {
                   data.power_consumption,
                   data.flavor,
                   data.material,
-                  data.brand,
-                  data.product_date,
-                  data.soft_delete,
-                  data.is_available,
+                  data.id
+              
             ];
-            db.query(constants.UPDATE_CUSTOMER, params, (err, result) => {
+
+            console.log("Update params", params);
+            db.query(constatnt.UPDATE_PRODUCT, params, (err, result) => {
               if (err) {
+                console.log("Product Updating Error!");
                 return res.status(400).json({ error: err.message });
               } else {
+                console.log("Product sucessfully updated!");
                 return res.status(200).json({
-                  message: "Customer sucessfully updated!",
+                  message: "Product sucessfully updated!",
                   data: result,
                 });
               }
             });
           }
         } else {
+          console.log("There is no any product in this id to update");
           return res.status(400).json({
-            message: "There is no any customer in this id to update",
+            message: "There is no any product in this id to update",
           });
         }
       }
