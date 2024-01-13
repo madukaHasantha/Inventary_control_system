@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { productList } from "../Redux/Product/productAction";
-import { productNameGetList } from "../Redux/Product Name/productNameAction";
-import { productTypeGetList } from "../Redux/Product Type/productTypeAction";
-import { supplierGetList } from "../Redux/Supplier/supplierAction";
 import { productUpdateDataList } from "../Redux/Product/productAction";
 
 const ProductTable = () => {
@@ -66,15 +63,15 @@ const ProductTable = () => {
   const [responseData, setResponseData] = useState(null);
 
   const mainHandleSubmit = () => {
-
-    
     dispatch(productUpdateDataList(formData));
   };
 
-  //Edit popup form
 
+  
+  //Edit popup form
   const EditPopupForm = ({ onClose, itemData }) => {
     console.log("Table clicked Item data: ", itemData);
+
     
     const [editformData, setEditFormData] = useState({
       ProductId: itemData.product_id,
@@ -90,6 +87,7 @@ const ProductTable = () => {
       StorekeepingUnit: itemData.Stock_keeping_unit,
     });
 
+    
 
     const editHandleChange = (e) => {
       const { name, value, type, files } = e.target;
@@ -125,10 +123,6 @@ const ProductTable = () => {
         selectedSupplierNameId = parseInt(editformData.SupplierName, 10);
       }
 
-      console.log(
-        "type of selectedProductNameId",
-        typeof selectedSupplierNameId
-      );
 
       setFormData({
         ...formData,
@@ -235,7 +229,7 @@ const ProductTable = () => {
                     ))}
                   </select>
                 </div>
-                {/*Supplier Name*/}
+                {/*Quantity*/}
                 <div className="w-full px-2 mb-4 md:w-1/2">
                   <label
                     htmlFor="Quantity"
@@ -439,7 +433,6 @@ const ProductTable = () => {
   const [clickedItemData, setClickedItemData] = useState(null);
 
   const EditOpenPopup = (data) => {
-    
     setClickedItemData(data);
     setEditPopupOpen(true);
   };
@@ -474,14 +467,13 @@ const ProductTable = () => {
     console.log("popup Form Data", popupFormData);
 
     const popupHandleSubmit = (e) => {
-
       e.preventDefault();
       setFormData({
         ...formData,
         Weight: popupFormData.Weight,
-        Flavor: popupFormData.Flavor ,
-        PowerConsumption: popupFormData.PowerConsumption ,
-        Size: popupFormData.Size ,
+        Flavor: popupFormData.Flavor,
+        PowerConsumption: popupFormData.PowerConsumption,
+        Size: popupFormData.Size,
         Material: popupFormData.Material,
         Color: popupFormData.Color,
       });
@@ -633,7 +625,6 @@ const ProductTable = () => {
   const [clickedItemSubFormData, setClickedItemSubFormData] = useState(null);
 
   const openPopup = (data) => {
-    
     setClickedItemSubFormData(data);
     setPopupOpen(true);
   };
