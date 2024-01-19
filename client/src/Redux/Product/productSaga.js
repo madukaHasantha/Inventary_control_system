@@ -69,9 +69,9 @@ function* postProduct(action) {
 function* updateProduct(action) {
   try {
     console.log("Product saga, Update Product is called");
-    const formData = action.payload;
+    const updateFormData = action.payload;
 
-    console.log("Update Form data", formData);
+    console.log("Update Form data", updateFormData);
 
     let response = yield fetch(
       "http://localhost:4000/ICMS/productsRouts/edit_products",
@@ -80,7 +80,7 @@ function* updateProduct(action) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(updateFormData),
       }
     );
 
