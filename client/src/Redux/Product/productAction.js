@@ -15,16 +15,16 @@ export const editProductDataList = (EditFormData) => {
   }
 }
 
-export const productInsertDataList = (formData) => {
-  console.log("product Insert DataList is called", formData);
+export const productInsertDataList = (updateFormData) => {
+  console.log("product action Insert DataList is call", updateFormData);
   return {
     type: PRODUCT_INSERT_LIST,
-    payload: formData,
+    payload: updateFormData,
   };
 };
 
 export const productUpdateDataList = (formData) => {
-  console.log("product Updatet DataList is called", formData);
+  console.log("product action Updatet DataList is called", formData);
   return {
     type: PRODUCT_UPDATE_LIST,
     payload: formData,

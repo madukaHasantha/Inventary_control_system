@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { productUpdateDataList } from "../Redux/Product/productAction";
 
-
 const EditPopupForm = ({ onClose }) => {
   const dispatch = useDispatch();
 
@@ -45,8 +44,6 @@ const EditPopupForm = ({ onClose }) => {
     Color: editFormReducerData.color,
   });
 
-  console.log("Edit Main form data:", editformData);
-
   const editHandleChange = (e) => {
     const { name, value, type, files } = e.target;
     setEditFormData({
@@ -58,58 +55,52 @@ const EditPopupForm = ({ onClose }) => {
   const editHandleSubmit = async (e) => {
     e.preventDefault();
 
-    
     let selectedProductTypeId = null;
 
     if (editFormReducerData.product_type_name === editformData.ProductType) {
-      selectedProductTypeId = editFormReducerData.product_type_id;
+      selectedProductTypeId = parseInt(editFormReducerData.product_type_id, 10);
     } else {
       selectedProductTypeId = parseInt(editformData.ProductType, 10);
     }
 
+    console.log("product type id", selectedProductTypeId);
+
     let selectedProductNameId = null;
 
     if (editFormReducerData.product_name === editformData.ProductName) {
-      selectedProductNameId = editFormReducerData.product_name_id;
+      selectedProductNameId = parseInt(editFormReducerData.product_name_id, 10);
     } else {
       selectedProductNameId = parseInt(editformData.ProductName, 10);
     }
 
+    console.log("product name id", selectedProductNameId);
+
     let selectedSupplierNameId = null;
 
     if (editFormReducerData.supplier_name === editformData.SupplierName) {
-      selectedSupplierNameId = editFormReducerData.supplier_name_id;
+      selectedSupplierNameId = parseInt(
+        editFormReducerData.supplier_name_id,
+        10
+      );
     } else {
       selectedSupplierNameId = parseInt(editformData.SupplierName, 10);
     }
 
-   await setEditFormData({
-        ...editformData,
-        ProductId: editformData.ProductId,
-        ProductType: selectedProductTypeId,
-        ProductName: selectedProductNameId,
-        SupplierName: selectedSupplierNameId,
-        SellingPrice: editformData.SellingPrice,
-        CostPrice: editformData.CostPrice,
-        Quantity: editformData.Quantity,
-        StoreLocation: editformData.StoreLocation,
-        Discount: editformData.Discount,
-        TaxInformation: editformData.TaxInformation,
-        StorekeepingUnit: editformData.StorekeepingUnit,
-        Weight: editformData.Weight,
-        Flavor: editformData.Flavor,
-        PowerConsumption: editformData.PowerConsumption,
-        Size: editformData.Size,
-        Material: editformData.Material,
-        Color: editformData.Color,
-      });
+    console.log("product suppier id", selectedSupplierNameId);
 
-    await dispatch(productUpdateDataList(editformData))
+    await setEditFormData({
+      ...editformData,
+      ProductType: selectedProductTypeId,
+      ProductName: selectedProductNameId,
+      SupplierName: selectedSupplierNameId,
+    });
 
-    // onClose();
+    console.log("Edit Main form data:", editformData);
+
+    await dispatch(productUpdateDataList(editformData));
+
+    onClose();
   };
-
-  
 
   return (
     <>
