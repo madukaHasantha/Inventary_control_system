@@ -6,7 +6,7 @@ import { editProductDataList } from "../Redux/Product/productAction";
 
 const ProductTable = () => {
   let productData = useSelector((state) => state.produtctReducerData);
-  console.log("product data in product tabale component", productData);
+  console.log("product data in product tabale componen", productData);
 
   const dispatch = useDispatch();
   useEffect(() => {
