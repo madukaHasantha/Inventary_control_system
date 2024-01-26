@@ -8,12 +8,12 @@ const EditPopupForm = ({ onClose }) => {
   let productNameData = useSelector(
     (state) => state.produtctNameGetDataReducer
   );
-  console.log("Product Name data in EditPopupForm componen", productNameData);
+  console.log("Product Name data in EditPopupForm component", productNameData);
 
   let productTypeData = useSelector(
     (state) => state.produtctTypeGetDataReducer
   );
-  console.log("Product type data in EditPopupForm componen", productTypeData);
+  console.log("Product type data in EditPopupForm component", productTypeData);
 
   let supplierData = useSelector((state) => state.supplierGetDataReducer);
   console.log("Supplier data in EditPopupForm component", supplierData);
