@@ -5,7 +5,7 @@ import {PRODUCT_NAME_GET_LIST, SET_PRODUCT_NAME_GET_LIST} from "../constatnt";
 
 function* getProductName() {
     try {
-      console.log("getProductName saga is call");
+      console.log("getProductName saga is called");
       let response = yield fetch(
         "http://localhost:4000/ICMS/productsNameRouts/get_all_products_names"
       );
