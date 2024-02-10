@@ -5,7 +5,7 @@ const initialState = {
 };
 
 export const produtctNameGetDataReducer = (state = [], action) => {
-  console.log("product name reducer data is called", action.payload);
+  console.log("product name reducer data is call", action.payload);
 
   switch (action.type) {
     case SET_PRODUCT_NAME_GET_LIST:
