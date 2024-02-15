@@ -54,5 +54,6 @@ JOIN
   UPDATE_PRODUCT: `UPDATE product SET id=?, PRODUCT_TYPE_id=?, PRODUCT_NAME_id=?, SUPPLIER_id=?, cost_price=?,
                 selling_price=?, quantity=?, location_in_the_store=?, product_images=?, discount=?, tax_information=?,
                  Stock_keeping_unit=?, color=?, size=?, weight=?, power_consumption=?, flavor=?, material=?
-                 WHERE id=?`
+                 WHERE id=?`,
+  DELETE_PRODUCT: `DELETE FROM product WHERE id=?`               
 };
