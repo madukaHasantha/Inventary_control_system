@@ -250,10 +250,8 @@ module.exports.getProductByIdAndSuppierId = async (req, res) => {
 
 module.exports.editProduct = async (req, res) => {
   try {
-
     console.log("editProduct is called");
     const productID = req.body.ProductId;
-    
 
     await db.query(
       constatnt.GET_PRODUCT_BY_PRODUCTID,
@@ -264,7 +262,6 @@ module.exports.editProduct = async (req, res) => {
             console.log("product id is not finding!");
             return res.status(400).json({ error: err.message });
           } else {
-
             console.log("product id is ok");
             // data = result[0];
 
@@ -293,33 +290,29 @@ module.exports.editProduct = async (req, res) => {
               power_consumption: req.body.PowerConsumption,
               flavor: req.body.Flavor,
               material: req.body.Material,
-          
             };
-
-            
 
             console.log("data in the update", data);
             var params = [
-                  data.id,
-                  data.PRODUCT_TYPE_id,
-                  data.PRODUCT_NAME_id,
-                  data.SUPPLIER_id,
-                  data.cost_price,
-                  data.selling_price,
-                  data.quantity,
-                  data.location_in_the_store,
-                  data.product_images,
-                  data.discount,
-                  data.tax_information,
-                  data.Stock_keeping_unit,
-                  data.color,
-                  data.size,
-                  data.weight,
-                  data.power_consumption,
-                  data.flavor,
-                  data.material,
-                  data.id
-              
+              data.id,
+              data.PRODUCT_TYPE_id,
+              data.PRODUCT_NAME_id,
+              data.SUPPLIER_id,
+              data.cost_price,
+              data.selling_price,
+              data.quantity,
+              data.location_in_the_store,
+              data.product_images,
+              data.discount,
+              data.tax_information,
+              data.Stock_keeping_unit,
+              data.color,
+              data.size,
+              data.weight,
+              data.power_consumption,
+              data.flavor,
+              data.material,
+              data.id,
             ];
 
             console.log("Update params", params);
@@ -349,5 +342,28 @@ module.exports.editProduct = async (req, res) => {
   }
 };
 
+module.exports.deleteProduct = async (req, res) => {
+  try {
+    const productID = req.body.ProductId;
+    var params = [productID];
+
+    await db.run(constatnt.DELETE_PRODUCT, params, (err, result) => {
+      if (err) {
+        return res.status(400).json({ error: err.message });
+      } else {
+        return res.status(200).json({
+          message: "Successfully deleted!",
+          changes: this.changes,
+        });
+        console.log("Successfully deleted!");
+      }
+    });
+  } catch (e) {
+    return res.status(400).json({
+      message: "Error in deleting!",
+    });
+    console.log("Error in deleting!");
+  }
+};
+
 module.exports.getByIdProduct = async (req, res) => {};
-module.exports.deleteProduct = async (req, res) => {};
