@@ -343,11 +343,13 @@ module.exports.editProduct = async (req, res) => {
 };
 
 module.exports.deleteProduct = async (req, res) => {
+
+  console.log("call delete function");
   try {
     const productID = req.body.ProductId;
     var params = [productID];
 
-    await db.run(constatnt.DELETE_PRODUCT, params, (err, result) => {
+    await db.query(constatnt.DELETE_PRODUCT, params, (err, result) => {
       if (err) {
         return res.status(400).json({ error: err.message });
       } else {
@@ -362,7 +364,7 @@ module.exports.deleteProduct = async (req, res) => {
     return res.status(400).json({
       message: "Error in deleting!",
     });
-    console.log("Error in deleting!");
+    console.log("Error in deleting");
   }
 };
 
