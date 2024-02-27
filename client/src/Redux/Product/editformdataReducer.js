@@ -1,7 +1,7 @@
 import { EDIT_FORM_DATA } from "../constatnt";
 
 export const editFormReducerData = (state = [], action) => {
-  console.log("Edit form reducer data is calle", action.payload, typeof(action.payload));
+  console.log("Edit form reducer data is calleed", action.payload, typeof(action.payload));
 
   switch (action.type) {
     case EDIT_FORM_DATA:
