@@ -10,7 +10,7 @@ import {
 
 function* getProduct() {
   try {
-    console.log("getProduct saga is call");
+    console.log("getProduct saga is called");
     let response = yield fetch(
       "http://localhost:4000/ICMS/productsRouts/get_all_products"
     );
