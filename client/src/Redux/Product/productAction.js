@@ -24,7 +24,7 @@ export const productInsertDataList = (updateFormData) => {
 };
 
 export const productUpdateDataList = (formData) => {
-  console.log("product action Updatet DataList is called", formData);
+  console.log("product action Updatet DataList is call", formData);
   return {
     type: PRODUCT_UPDATE_LIST,
     payload: formData,
